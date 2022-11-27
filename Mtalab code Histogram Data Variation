@@ -1,0 +1,34 @@
+% Read ECG for the last data from a ThingSpeak channel and 
+% visualize temperature variations using the MATLAB HISTOGRAM function. 
+   
+% Channel (ID: 1283400) contains data from the MathWorks Weather Station, located 
+% in Sfax, Tunisia. The data is collected once for diver laps of time.
+%Field 1 contains Signal data (each 15seconds).
+
+% Channel ID to read data from 
+readChannelID = 1283400; 
+   
+% Field ID 
+EcgFieldID = 1; 
+
+%Number of recods to read (lines)
+points= 1000;
+
+% Channel Read API Key   
+% If your channel is private, then enter the read API 
+% Key between the '' below:   
+readAPIKey = ''; 
+
+% Get temperature data from field 4 for the  
+% minutes. Learn more about the THINGSPEAKREAD function by going to 
+% the Documentation tab on the right side pane of this page. 
+   
+ecgH = thingSpeakRead(readChannelID,'Fields',EcgFieldID,...
+                                    'NumPoints',points,  ...
+                                    'ReadKey',readAPIKey); 
+                       %'NumMinutes',10*60 % last 10 hours = 10 x 60
+   
+histogram(ecgH); 
+xlabel('ECG (mV)'); 
+ylabel('Number of Measurements\newline for Each signal measure'); 
+title('Histogram of ECG Variation');
